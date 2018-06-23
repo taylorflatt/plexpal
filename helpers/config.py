@@ -11,7 +11,6 @@ class Config(object):
     BAD_PATH = "bad_path"
     NO_SUCH_KEY = "no_such_key"
 
-
     def __init__(self, config_path):
         '''
          @Desc: Config constructor
@@ -33,7 +32,9 @@ class Config(object):
         except (KeyError, IndexError):
             return self.NO_SUCH_KEY
         except Exception:
-            errors.get_exception(errors.UNKNOWN, trace=True)
+            raise errors.Unhandled(
+                "{0}".format(errors.get_exception(trace=True))
+            )
         
 
     def get_dict(self,):

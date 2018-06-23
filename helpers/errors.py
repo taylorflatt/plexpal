@@ -1,8 +1,13 @@
-UNCAUGHT = "uncaught exception"
-UNKNOWN = "unknown error occured"
-
-class missing_config(Exception):
+class Missing_Config(Exception):
     def __init__(self, error_msg="missing_config"):
+        Exception.__init__(self, error_msg)
+
+class Unhandled(Exception):
+    def __init__(self, error_msg="unknown error occured"):
+        Exception.__init__(self, error_msg)
+
+class Uncaught(Exception):
+    def __init__(self, error_msg="uncaught exception"):
         Exception.__init__(self, error_msg)
 
 def get_exception(msg="", trace=False):

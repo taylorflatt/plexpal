@@ -2,7 +2,7 @@ import os, sys
 from config import Config
 import uuid
 
-from errors import missing_config
+import errors
 
 # API Types
 PLEX    = "plex"
@@ -24,15 +24,25 @@ class API(object):
         '''
         conf = Config(self.__config_path__)
         self.reference = conf.get_dict()
-        self.authenticated = dict()
         if self.reference == conf.BAD_PATH:
-            raise missing_config("Error - {0}: {1}".format(conf.BAD_PATH, self.__config_path__))
+            raise errors.Missing_Config(
+                "Error - {0}: {1}".format(conf.BAD_PATH, self.__config_path__)
+            )
 
         # iterates configuration values and assigns them as object attributes
         for k, v in self.reference.items():
             if "<UUID>" in v:
-                uuserid = uuid.uuid4()
-                setattr(self, k, v.replace("<UUID>", uuserid))
-                self.authenticated.update({uuserid.hex: uuserid})
+                setattr(self, k, v.replace("<UUID>", uuid.uuid4()))
             else:
-                setattr(self, k, v)       
+                setattr(self, k, v)
+        try:
+            if type(self.headers) is dict:
+                for k, v in self.headers.items():
+                    if "<UUID>" in v:
+                        setattr(self, k, v.replace("<UUID>", uuid.uuid4()))
+        except AttributeError:
+            pass
+        except Exception:
+            raise errors.Unhandled(
+                "{0}".format(errors.get_exception(trace=True))
+            )
