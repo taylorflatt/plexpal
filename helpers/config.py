@@ -16,10 +16,13 @@ class Config(object):
          @Desc: Config constructor
          @Params: config_path - string path to configuration file
         '''
-        self.path = config_path if os.path.isfile(config_path) else self.BAD_PATH
+        self.path = config_path if os.path.isfile(config_path) else self.BAD_PATH 
         self.config = dict()
         with open(self.path, 'r') as jc:
-            self.config = json.loads(jc.read())
+            result = str({})
+            if not self.path == self.BAD_PATH:
+                result = jc.read()
+            self.config = json.loads(result)
 
     def get(self, key):
         '''
