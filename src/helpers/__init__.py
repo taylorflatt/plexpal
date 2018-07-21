@@ -1,5 +1,6 @@
+#!/usr/bin/env python3
 import os
-from src.helpers.errors import get_exception
+import src.helpers.errors
 
 for module in os.listdir(os.path.dirname(__file__)):
     try:
@@ -7,4 +8,4 @@ for module in os.listdir(os.path.dirname(__file__)):
             continue
         _temp = __import__(module[:-3], globals(), locals())
     except Exception:
-        print(get_exception(trace=True))
+        pass  #print(get_exception(trace=True))

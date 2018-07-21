@@ -1,6 +1,10 @@
-import os, sys
+#!/usr/bin/env python3
 import json
-import errors
+import os
+import sys
+
+from src.helpers import errors
+
 
 class Config(object):
     '''
@@ -16,11 +20,11 @@ class Config(object):
          @Desc: Config constructor
          @Params: config_path - string path to configuration file
         '''
-        self.path = config_path if os.path.isfile(config_path) else self.BAD_PATH 
+        self.path = config_path if os.path.isfile(config_path) else self.BAD_PATH
         self.config = dict()
-        with open(self.path, 'r') as jc:
+        if not self.path == self.BAD_PATH:
             result = str({})
-            if not self.path == self.BAD_PATH:
+            with open(self.path, 'r') as jc:
                 result = jc.read()
             self.config = json.loads(result)
 
@@ -35,12 +39,9 @@ class Config(object):
         except (KeyError, IndexError):
             return self.NO_SUCH_KEY
         except Exception:
-            raise errors.Unhandled(
-                "{0}".format(errors.get_exception(trace=True))
-            )
-        
+            raise errors.Unhandled("{0}".format(errors.get_exception(trace=True)))
 
-    def get_dict(self,):
+    def get_dict(self, ):
         '''
          @Desc: function to retrieve full configuration dictionary
          @Return: configuration dictionary

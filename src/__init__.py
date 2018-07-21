@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 from src.helpers.errors import get_exception
 

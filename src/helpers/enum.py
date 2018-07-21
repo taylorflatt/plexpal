@@ -1,7 +1,9 @@
+#!/usr/bin/env python3
 class _BUILDENUM(object):
     '''
      @ClassDesc: class to create attribute-holding object from key-value pairs
     '''
+
     def __init__(self, **kwargs):
         '''
          @Desc: _BUILDENUM constructor
@@ -17,15 +19,16 @@ class _BUILDENUM(object):
         '''
         setattr(self, name, value)
 
+
 class ENUM(_BUILDENUM):
     '''
      @ClassDesc:    class to create attribute-holding object from dictionary
                     inherits from _BUILDENUM class
     '''
+
     def __init__(self, attributes):
         '''
          @Desc: ENUM constructor
          @Params: attributes - dictionary object
         '''
         ENUM.__init__(self, **attributes)
-        
