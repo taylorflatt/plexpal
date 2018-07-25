@@ -31,4 +31,4 @@ class ENUM(_BUILDENUM):
          @Desc: ENUM constructor
          @Params: attributes - dictionary object
         '''
-        ENUM.__init__(self, **attributes)
+        _BUILDENUM.__init__(self, **attributes)

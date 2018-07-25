@@ -35,7 +35,7 @@ class Config(object):
          @Return: configuration value
         '''
         try:
-            return self.config.get(key)
+            return self.config[key]
         except (KeyError, IndexError):
             return self.NO_SUCH_KEY
         except Exception:
